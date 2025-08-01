@@ -23,12 +23,22 @@ const Contact = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
+  const validateEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const { name, email, subject, message } = formData;
+
     if (!name || !email || !subject || !message) {
       alert('Vui lòng điền đầy đủ các trường.');
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      alert('Email không hợp lệ.');
       return;
     }
 
@@ -111,22 +121,42 @@ const Contact = () => {
           {/* Contact Form */}
           <div className="lg:w-1/2">
             <form ref={formRef} onSubmit={handleSubmit} className="bg-white p-8 rounded-xl shadow-md">
-              {['name', 'email', 'subject'].map((field, index) => (
-                <div key={index} className="mb-6">
-                  <label htmlFor={field} className="block text-gray-700 font-medium mb-2">
-                    {field.charAt(0).toUpperCase() + field.slice(1)}
-                  </label>
-                  <input
-                    type={field === 'email' ? 'email' : 'text'}
-                    id={field}
-                    name={field}
-                    value={formData[field]}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required
-                  />
-                </div>
-              ))}
+              <div className="mb-6">
+                <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Name</label>
+                <input
+                  id="name"
+                  name="user_name"
+                  type="text"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              <div className="mb-6">
+                <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email</label>
+                <input
+                  id="email"
+                  name="user_email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              <div className="mb-6">
+                <label htmlFor="subject" className="block text-gray-700 font-medium mb-2">Subject</label>
+                <input
+                  id="subject"
+                  name="subject"
+                  type="text"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
               <div className="mb-6">
                 <label htmlFor="message" className="block text-gray-700 font-medium mb-2">Message</label>
                 <textarea
@@ -135,8 +165,8 @@ const Contact = () => {
                   rows="5"
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 ></textarea>
               </div>
               <button

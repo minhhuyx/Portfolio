@@ -1,6 +1,6 @@
 import React from "react";
-import { FaBars } from "react-icons/fa"; // Import react-icon
-import { SiFlutter } from "react-icons/si"
+import { FaBars } from "react-icons/fa";
+import { SiFlutter } from "react-icons/si";
 
 const Header = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -12,22 +12,27 @@ const Header = () => {
     const handleNavClick = (e, targetId) => {
         e.preventDefault();
         setIsMobileMenuOpen(false);
-        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            targetElement.scrollIntoView({ behavior: "smooth" });
+        }
     };
+
+    const navItems = ['home', 'skills', 'about',  'projects', 'contact'];
 
     return (
         <header className="fixed w-full bg-white shadow-sm z-50">
             <div className="container mx-auto px-6 py-4">
                 <div className="flex items-center justify-between">
+                    {/* Logo */}
                     <div className="flex items-center">
-                        {/* Logo hoặc icon nếu cần */}
-                        {    <SiFlutter className="text-3xl text-blue-400 mr-2" />}
-                        { <span className="text-xl font-bold text-gray-800">My Portfolio</span> }
+                        <SiFlutter className="text-3xl text-blue-400 mr-2" />
+                        <span className="text-xl font-bold text-gray-800">My Portfolio</span>
                     </div>
 
-                    {/* Desktop navigation */}
+                    {/* Desktop Navigation */}
                     <nav className="hidden md:flex space-x-8">
-                        {['home', 'about', 'skills', 'projects', 'contact'].map((section) => (
+                        {navItems.map((section) => (
                             <a
                                 key={section}
                                 href={`#${section}`}
@@ -39,7 +44,7 @@ const Header = () => {
                         ))}
                     </nav>
 
-                    {/* Mobile menu button */}
+                    {/* Mobile Menu Button */}
                     <button
                         className="md:hidden text-gray-700 focus:outline-none"
                         onClick={toggleMobileMenu}
@@ -49,9 +54,9 @@ const Header = () => {
                     </button>
                 </div>
 
-                {/* Mobile dropdown menu */}
-                <div className={`md:hidden mt-4 pb-4 ${isMobileMenuOpen ? '' : 'hidden'}`}>
-                    {['home', 'about', 'skills', 'projects', 'contact'].map((section) => (
+                {/* Mobile Dropdown Menu */}
+                <div className={`md:hidden mt-4 pb-4 ${isMobileMenuOpen ? 'block' : 'hidden'}`}>
+                    {navItems.map((section) => (
                         <a
                             key={section}
                             href={`#${section}`}
