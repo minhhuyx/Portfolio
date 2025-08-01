@@ -19,6 +19,7 @@ const Header = () => {
             <div className="container mx-auto px-6 py-4">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center">
+                         <SiFlutter className="text-3xl text-blue-400 mr-2" />
                         {/* Logo hoặc icon nếu cần */}
                         {/* <span className="text-xl font-bold text-gray-800">MyPortfolio</span> */}
                     </div>
