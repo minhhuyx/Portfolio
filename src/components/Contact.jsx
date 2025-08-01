@@ -1,4 +1,5 @@
 import React from 'react';
+import emailjs from '@emailjs/browser';
 import {
   FaEnvelope,
   FaPhoneAlt,
@@ -10,6 +11,7 @@ import {
 } from 'react-icons/fa';
 
 const Contact = () => {
+  const formRef = React.useRef();
   const [formData, setFormData] = React.useState({
     name: '',
     email: '',
@@ -21,36 +23,34 @@ const Contact = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+    const { name, email, subject, message } = formData;
+    if (!name || !email || !subject || !message) {
       alert('Vui lòng điền đầy đủ các trường.');
       return;
     }
 
-    try {
-      const res = await fetch('http://localhost:5000/api/sendEmail', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        alert('Email sent!');
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      } else {
-        alert(`Send failed: ${data.details || 'Unknown error'}`);
-      }
-    } catch (err) {
-      console.error('Error:', err);
-      alert(`Something went wrong: ${err.message}`);
-    }
+    emailjs
+      .sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        formRef.current,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+      .then(
+        () => {
+          alert('Email sent successfully!');
+          setFormData({ name: '', email: '', subject: '', message: '' });
+        },
+        (error) => {
+          console.error(error);
+          alert('Failed to send email. Please try again later.');
+        }
+      );
   };
 
-  // Icon Mapping
   const contactInfo = [
     { icon: <FaEnvelope className="text-blue-500" />, title: 'Email', value: 'huyminhluong2512@gmail.com' },
     { icon: <FaPhoneAlt className="text-blue-500" />, title: 'Phone', value: '0397920900' },
@@ -110,7 +110,7 @@ const Contact = () => {
 
           {/* Contact Form */}
           <div className="lg:w-1/2">
-            <div className="bg-white p-8 rounded-xl shadow-md">
+            <form ref={formRef} onSubmit={handleSubmit} className="bg-white p-8 rounded-xl shadow-md">
               {['name', 'email', 'subject'].map((field, index) => (
                 <div key={index} className="mb-6">
                   <label htmlFor={field} className="block text-gray-700 font-medium mb-2">
@@ -119,9 +119,11 @@ const Contact = () => {
                   <input
                     type={field === 'email' ? 'email' : 'text'}
                     id={field}
+                    name={field}
                     value={formData[field]}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    required
                   />
                 </div>
               ))}
@@ -129,19 +131,21 @@ const Contact = () => {
                 <label htmlFor="message" className="block text-gray-700 font-medium mb-2">Message</label>
                 <textarea
                   id="message"
+                  name="message"
                   rows="5"
                   value={formData.message}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  required
                 ></textarea>
               </div>
               <button
-                onClick={handleSubmit}
+                type="submit"
                 className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition shadow-md"
               >
                 Send Message
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { FaBars } from "react-icons/fa"; // Import react-icon
+import { SiFlutter } from "react-icons/si"
 
 const Header = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -19,9 +20,9 @@ const Header = () => {
             <div className="container mx-auto px-6 py-4">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                         <SiFlutter className="text-3xl text-blue-400 mr-2" />
                         {/* Logo hoặc icon nếu cần */}
-                        {/* <span className="text-xl font-bold text-gray-800">MyPortfolio</span> */}
+                        {    <SiFlutter className="text-3xl text-blue-400 mr-2" />}
+                        { <span className="text-xl font-bold text-gray-800">My Portfolio</span> }
                     </div>
 
                     {/* Desktop navigation */}
