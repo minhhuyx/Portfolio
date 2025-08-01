@@ -1,4 +1,5 @@
 import React from "react";
+import { FaBars } from "react-icons/fa"; // Import react-icon
 
 const Header = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -18,10 +19,11 @@ const Header = () => {
             <div className="container mx-auto px-6 py-4">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                        {/* <i className="fab fa-flutter text-3xl text-blue-500 mr-2"></i> */}
-                        {/* <span className="text-xl font-bold text-gray-800">FlutterDev</span> */}
+                        {/* Logo hoặc icon nếu cần */}
+                        {/* <span className="text-xl font-bold text-gray-800">MyPortfolio</span> */}
                     </div>
-                    
+
+                    {/* Desktop navigation */}
                     <nav className="hidden md:flex space-x-8">
                         {['home', 'about', 'skills', 'projects', 'contact'].map((section) => (
                             <a
@@ -34,15 +36,18 @@ const Header = () => {
                             </a>
                         ))}
                     </nav>
-                    
+
+                    {/* Mobile menu button */}
                     <button
                         className="md:hidden text-gray-700 focus:outline-none"
                         onClick={toggleMobileMenu}
+                        aria-label="Toggle menu"
                     >
-                        <i className="fas fa-bars text-2xl"></i>
+                        <FaBars className="text-2xl" />
                     </button>
                 </div>
-                
+
+                {/* Mobile dropdown menu */}
                 <div className={`md:hidden mt-4 pb-4 ${isMobileMenuOpen ? '' : 'hidden'}`}>
                     {['home', 'about', 'skills', 'projects', 'contact'].map((section) => (
                         <a

@@ -1,4 +1,5 @@
 import React from 'react';
+import { SiFlutter } from 'react-icons/si'; // Thay thế Font Awesome
 
 const Footer = () => (
     <footer className="bg-gray-800 text-white py-12 px-6">
@@ -7,7 +8,7 @@ const Footer = () => (
                 {/* Logo & Slogan */}
                 <div className="flex flex-col items-start">
                     <div className="flex items-center mb-2">
-                        <i className="fab fa-flutter text-3xl text-blue-400 mr-2"></i>
+                        <SiFlutter className="text-3xl text-blue-400 mr-2" />
                         <span className="text-xl font-bold">FlutterDev</span>
                     </div>
                     <p className="text-gray-400">Building beautiful mobile experiences</p>
@@ -15,18 +16,17 @@ const Footer = () => (
 
                 {/* Quick Links */}
                 <div className="flex flex-col items-end justify-end">
-                        <h4 className="text-lg font-semibold mb-4 ">Quick Links</h4>
-                        <ul className="flex flex-row space-x-6">
-                            {['home', 'about', 'skills', 'projects', 'contact'].map((section) => (
-                                <li key={section}>
-                                    <a href={`#${section}`} className="text-gray-400 hover:text-white transition">
-                                        {section.charAt(0).toUpperCase() + section.slice(1)}
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                
+                    <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul className="flex flex-row space-x-6">
+                        {['home', 'about', 'skills', 'projects', 'contact'].map((section) => (
+                            <li key={section}>
+                                <a href={`#${section}`} className="text-gray-400 hover:text-white transition">
+                                    {section.charAt(0).toUpperCase() + section.slice(1)}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
 
             <div className="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
